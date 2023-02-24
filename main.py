@@ -4,11 +4,13 @@ import pandas as pd
 from datetime import datetime as dt
 import os
 from google.cloud import storage
+from functions import time_taken
 
 # from airflow import DAG
 # from airflow.operators.python_operator import PythonOperator
 
 
+'''
 # Function to keep time (because these things can take forever to run)
 def time_taken(time: dt) -> str:
     s = (dt.now()-time).total_seconds()
@@ -25,13 +27,13 @@ def time_taken(time: dt) -> str:
         h = int(m/60)
         m = int(m%60)
         return f'{h} hr {m} min {s} sec'
-
+'''
 
 # OpenWeather API config
 api_key = '436bcf1b4529dcacc5c6e50841458fc2'
 units = 'metric'
 
-# Inout to the api call: a list of cities in the format -> "City, Country"
+# Input to the api call: a list of cities in the format -> "City, Country"
 # locations = pd.read_csv('data/country_city.csv').head()
 # cities = locations['location'].unique().tolist()
 
@@ -96,14 +98,11 @@ blob.upload_from_filename(filename)
 os.remove(filename) # removing the local version of the file
 
 # Print the public URL of the file
-print(f'Uploaded to google cloud storage bucket: "{bucket_name}" with filename as: "{filename}"')
+print(f'Uploaded to google cloud storage bucket: "{bucket_name}" with filename: "{filename}"')
 
 
 # Time End
 print(f'Total program runtime: {time_taken(start_time)}\n')           
-
-
-
 
 
 
